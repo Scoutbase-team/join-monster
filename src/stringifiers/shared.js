@@ -95,7 +95,8 @@ export function orderColumnsToString(orderColumns, q, as) {
 // find out what the limit, offset, order by parts should be from the relay connection args if we're paginating
 export function interpretForOffsetPaging(node, dialect) {
   const { name } = dialect
-  if (idx(node, _ => _.args.last)) {
+
+  if (idx(node, _ => _.args.last) && !idx(node, _ => _.args.before)) {
     throw new Error('Backward pagination not supported with offsets. Consider using keyset pagination instead')
   }
 
